@@ -1,4 +1,4 @@
-from typing import Dict, Any, List
+from typing import Dict, List
 from enum import Enum
 
 
@@ -110,6 +110,55 @@ Return ONLY a valid JSON object:
             "error_type": "verb tense",
             "correct_sentence": "I have lived in London since 2020.",
             "explanation": "Use Present Perfect (have lived) not Present Continuous with 'since'"
+        }}
+    ]
+}}""",
+
+        ExerciseType.SENTENCE_TRANSFORMATION: """Create {count} sentence transformation exercises for {level} level students.
+
+Grammar focus: {grammar_topic}
+Vocabulary theme: {theme}
+
+Requirements:
+- Provide an original sentence and a transformation instruction
+- Keep meaning the same in the transformed sentence
+- Give a correct transformed answer
+- Include short explanation of grammar point
+
+Return ONLY a valid JSON object:
+{{
+    "exercises": [
+        {{
+            "original_sentence": "I started learning English three years ago.",
+            "instruction": "Rewrite using 'have been'",
+            "transformed_sentence": "I have been learning English for three years.",
+            "explanation": "Present perfect continuous for an action that started in the past and continues now"
+        }}
+    ]
+}}""",
+
+        ExerciseType.MATCHING: """Create {count} matching exercises for {level} level students.
+
+Theme: {theme}
+Context: {context}
+
+Requirements:
+- Provide two columns: prompts and matches
+- Prompts and matches should be shuffled and not in the same order
+- Include answer key as mapping object
+- Content should be realistic and level-appropriate
+
+Return ONLY a valid JSON object:
+{{
+    "exercises": [
+        {{
+            "prompts": ["book a flight", "check in", "boarding pass"],
+            "matches": ["document for entering plane", "register at airport", "reserve plane ticket"],
+            "answer_key": {{
+                "book a flight": "reserve plane ticket",
+                "check in": "register at airport",
+                "boarding pass": "document for entering plane"
+            }}
         }}
     ]
 }}""",

@@ -1,7 +1,6 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing import Optional, List
-from enum import Enum
 
 from ai_layer.exercise_generator import ExerciseGenerator
 from ai_layer.promts import ExerciseType, CEFRLevel
@@ -13,10 +12,23 @@ generator = ExerciseGenerator()
 class GenerateRequest(BaseModel):
     exercise_type: str  # "fill_blanks", "multiple_choice", etc.
     level: str  # "A1", "B1", "C1", etc.
-    count: int = 5
+    count: int = Field(default=5, ge=1, le=50)
     grammar_topic: Optional[str] = None
     theme: str = "general"
     context: Optional[str] = "everyday situations"
+    model: Optional[str] = None
+
+
+class ImproveRequest(BaseModel):
+    exercise: dict
+    feedback: str = Field(min_length=5)
+    exercise_type: str
+    level: str
+
+
+@app.get("/health")
+async def health() -> dict:
+    return {"status": "ok"}
 
 
 @app.post("/api/v1/generate")
@@ -45,7 +57,8 @@ async def generate_exercises(request: GenerateRequest):
             count=request.count,
             grammar_topic=request.grammar_topic,
             theme=request.theme,
-            context=request.context
+            context=request.context,
+            model=request.model,
         )
 
         return result
@@ -71,7 +84,9 @@ async def batch_generate_exercises(requests: List[GenerateRequest]):
                 level=level,
                 count=req.count,
                 grammar_topic=req.grammar_topic,
-                theme=req.theme
+                theme=req.theme,
+                context=req.context,
+                model=req.model,
             )
             results.append({"success": True, "data": result})
         except Exception as e:
@@ -82,19 +97,14 @@ async def batch_generate_exercises(requests: List[GenerateRequest]):
 
 # Эндпоинт для улучшения упражнения
 @app.post("/api/v1/improve")
-async def improve_exercise(
-        exercise: dict,
-        feedback: str,
-        exercise_type: str,
-        level: str
-):
+async def improve_exercise(request: ImproveRequest):
     """Улучшение упражнения на основе фидбека"""
     try:
         result = generator.regenerate_with_feedback(
-            original_exercise=exercise,
-            feedback=feedback,
-            exercise_type=ExerciseType(exercise_type),
-            level=CEFRLevel(level)
+            original_exercise=request.exercise,
+            feedback=request.feedback,
+            exercise_type=ExerciseType(request.exercise_type),
+            level=CEFRLevel(request.level)
         )
         return result
     except Exception as e:

@@ -1,19 +1,13 @@
-# Development tools
-black==23.12.1
-flake8==7.0.0
-mypy==1.8.0
-isort==5.13.2
-pylint==3.0.3
+# Runtime
+fastapi>=0.115,<1.0
+uvicorn>=0.30,<1.0
+openai>=1.51,<2.0
+pydantic>=2.12,<3.0
+pydantic-settings>=2.6,<3.0
+httpx>=0.28,<1.0
 
-# Documentation
-mkdocs==1.5.3
-mkdocs-material==9.5.3
+# Optional validation/quality
+jsonschema>=4.23,<5.0
 
-# Pre-commit hooks
-pre-commit==3.6.0
-
-# Database migrations
-alembic==1.13.1
-
-# Load testing
-locust==2.20.0
+# Tests
+pytest>=8.3,<9.0

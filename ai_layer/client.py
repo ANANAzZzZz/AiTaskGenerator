@@ -1,11 +1,15 @@
 import openai
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, cast
 import time
-from functools import wraps
 import logging
 from .config import config
 
 logger = logging.getLogger(__name__)
+
+
+def _is_invalid_model_error(error: Exception) -> bool:
+    text = str(error).lower()
+    return "model identifier is invalid" in text or "invalid model" in text
 
 
 class RateLimiter:
@@ -43,9 +47,9 @@ class OpenRouterClient:
     def generate(
             self,
             messages: List[Dict[str, str]],
-            model: str = None,
-            temperature: float = None,
-            max_tokens: int = None,
+            model: Optional[str] = None,
+            temperature: Optional[float] = None,
+            max_tokens: Optional[int] = None,
             response_format: Optional[Dict] = None,
             **kwargs
     ) -> str:
@@ -62,31 +66,39 @@ class OpenRouterClient:
         Returns:
             Текст ответа от модели
         """
-        model = model or config.MODELS["primary"]
+        model = model or config.OPENROUTER_PRIMARY_MODEL
         temperature = temperature or config.DEFAULT_TEMPERATURE
         max_tokens = max_tokens or config.DEFAULT_MAX_TOKENS
 
         self.rate_limiter.wait_if_needed()
 
         try:
+            request_payload: Dict[str, Any] = {
+                "model": model,
+                "messages": messages,
+                "temperature": temperature,
+                "max_tokens": max_tokens,
+                **kwargs,
+            }
+            if response_format is not None:
+                request_payload["response_format"] = response_format
+
             response = self.client.chat.completions.create(
-                model=model,
-                messages=messages,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                response_format=response_format,
-                **kwargs
+                **request_payload
             )
 
             content = response.choices[0].message.content
+            if content is None:
+                raise ValueError("Model returned empty content")
 
             # Логирование использования токенов
             usage = response.usage
-            logger.info(
-                f"Tokens used: {usage.total_tokens} "
-                f"(prompt: {usage.prompt_tokens}, "
-                f"completion: {usage.completion_tokens})"
-            )
+            if usage:
+                logger.info(
+                    f"Tokens used: {usage.total_tokens} "
+                    f"(prompt: {usage.prompt_tokens}, "
+                    f"completion: {usage.completion_tokens})"
+                )
 
             return content
 
@@ -100,29 +112,52 @@ class OpenRouterClient:
     def generate_with_retry(
             self,
             messages: List[Dict[str, str]],
-            max_retries: int = None,
+            max_retries: Optional[int] = None,
             **kwargs
     ) -> str:
         """Генерация с автоматическими повторами при ошибках"""
-        max_retries = max_retries or config.MAX_RETRIES
+        retries = max_retries or config.MAX_RETRIES
+        explicit_model = kwargs.pop("model", None)
+        model_candidates = config.get_model_candidates(explicit_model)
+        last_error: Optional[Exception] = None
 
-        for attempt in range(max_retries):
-            try:
-                return self.generate(messages, **kwargs)
-            except openai.RateLimitError:
-                if attempt < max_retries - 1:
-                    wait_time = 2 ** attempt  # Exponential backoff
-                    logger.warning(f"Rate limit hit, waiting {wait_time}s")
-                    time.sleep(wait_time)
-                else:
-                    raise
-            except openai.APIError as e:
-                if attempt < max_retries - 1 and e.status_code >= 500:
-                    wait_time = 2 ** attempt
-                    logger.warning(f"Server error, retrying in {wait_time}s")
-                    time.sleep(wait_time)
-                else:
-                    raise
+        for model in model_candidates:
+            for attempt in range(retries):
+                try:
+                    return self.generate(messages, model=model, **kwargs)
+                except openai.RateLimitError as e:
+                    last_error = e
+                    if attempt < retries - 1:
+                        wait_time = 2 ** attempt  # Exponential backoff
+                        logger.warning(f"Rate limit hit, waiting {wait_time}s")
+                        time.sleep(wait_time)
+                    else:
+                        raise
+                except openai.APIError as e:
+                    last_error = e
+                    if _is_invalid_model_error(e):
+                        logger.warning(f"Model '{model}' is invalid for current provider, trying next candidate")
+                        break
+
+                    status_code = getattr(e, "status_code", None)
+                    if (
+                        attempt < retries - 1
+                        and isinstance(status_code, int)
+                        and status_code >= 500
+                    ):
+                        wait_time = 2 ** attempt
+                        logger.warning(f"Server error, retrying in {wait_time}s")
+                        time.sleep(wait_time)
+                    else:
+                        raise
+
+        if last_error and _is_invalid_model_error(last_error):
+            raise ValueError(
+                "No valid model configured for your OpenRouter provider. "
+                "Set OPENROUTER_PRIMARY_MODEL (and optional OPENROUTER_FALLBACK_MODELS) in .env."
+            )
+
+        raise RuntimeError("Retry loop exited unexpectedly")
 
     def generate_streaming(
             self,
@@ -131,19 +166,25 @@ class OpenRouterClient:
     ):
         """Генерация с потоковой передачей (для UI в реальном времени)"""
         kwargs['stream'] = True
+        kwargs.setdefault('model', config.OPENROUTER_PRIMARY_MODEL)
 
-        response = self.client.chat.completions.create(
-            messages=messages,
-            **kwargs
-        )
+        request_payload: Dict[str, Any] = {"messages": messages, **kwargs}
+        response = self.client.chat.completions.create(**request_payload)
 
         for chunk in response:
             if chunk.choices[0].delta.content:
                 yield chunk.choices[0].delta.content
 
 
-# Глобальный экземпляр клиента
-ai_client = OpenRouterClient(
-    api_key=config.OPENROUTER_API_KEY,
-    base_url=config.OPENROUTER_BASE_URL
-)
+_ai_client: Optional[OpenRouterClient] = None
+
+
+def get_ai_client() -> OpenRouterClient:
+    """Ленивая инициализация клиента, чтобы импорт модулей не падал без ключа."""
+    global _ai_client
+    if _ai_client is None:
+        _ai_client = OpenRouterClient(
+            api_key=config.require_api_key(),
+            base_url=config.OPENROUTER_BASE_URL,
+        )
+    return cast(OpenRouterClient, _ai_client)

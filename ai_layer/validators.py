@@ -1,5 +1,4 @@
-import jsonschema
-from typing import Dict, Any, Tuple, List
+from typing import Dict, Tuple, List
 from .promts import ExerciseType, CEFRLevel
 
 
@@ -51,6 +50,30 @@ class ExerciseValidator:
                 if 'correct_answer' in exercise:
                     if exercise['correct_answer'] not in options:
                         errors.append("Correct answer must be one of the options")
+
+        elif exercise_type == ExerciseType.ERROR_CORRECTION:
+            required = ['incorrect_sentence', 'correct_sentence']
+            for field in required:
+                if field not in exercise:
+                    errors.append(f"Missing required field: {field}")
+
+        elif exercise_type == ExerciseType.SENTENCE_TRANSFORMATION:
+            required = ['original_sentence', 'instruction', 'transformed_sentence']
+            for field in required:
+                if field not in exercise:
+                    errors.append(f"Missing required field: {field}")
+
+        elif exercise_type == ExerciseType.MATCHING:
+            required = ['prompts', 'matches', 'answer_key']
+            for field in required:
+                if field not in exercise:
+                    errors.append(f"Missing required field: {field}")
+
+        elif exercise_type == ExerciseType.DIALOGUE:
+            required = ['dialogue', 'correct_answer']
+            for field in required:
+                if field not in exercise:
+                    errors.append(f"Missing required field: {field}")
 
         return len(errors) == 0, errors
 

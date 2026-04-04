@@ -1,7 +1,9 @@
 import json
 from typing import List, Dict, Any, Optional
 import logging
-from .client import ai_client
+import time
+
+from .client import get_ai_client
 from .promts import PromptBuilder, ExerciseType, CEFRLevel
 from .validators import ExerciseValidator
 
@@ -12,8 +14,11 @@ class ExerciseGenerator:
     """Основной класс для генерации упражнений"""
 
     def __init__(self, client=None):
-        self.client = client or ai_client
+        self.client = client
         self.validator = ExerciseValidator()
+
+    def _get_client(self):
+        return self.client or get_ai_client()
 
     def generate_exercises(
             self,
@@ -57,8 +62,9 @@ class ExerciseGenerator:
         )
 
         # Генерируем с retry логикой
+        response = None
         try:
-            response = self.client.generate_with_retry(
+            response = self._get_client().generate_with_retry(
                 messages=messages,
                 response_format={"type": "json_object"},  # Важно для JSON
                 temperature=0.7,  # Баланс между креативностью и последовательностью
@@ -181,7 +187,7 @@ class ExerciseGenerator:
              "content": f"Please improve it based on this feedback:\n{feedback}\n\nReturn the improved version in the same JSON format."}
         ]
 
-        response = self.client.generate_with_retry(
+        response = self._get_client().generate_with_retry(
             messages=messages,
             response_format={"type": "json_object"}
         )
