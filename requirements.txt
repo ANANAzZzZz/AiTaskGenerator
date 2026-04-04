@@ -1,0 +1,19 @@
+# Development tools
+black==23.12.1
+flake8==7.0.0
+mypy==1.8.0
+isort==5.13.2
+pylint==3.0.3
+
+# Documentation
+mkdocs==1.5.3
+mkdocs-material==9.5.3
+
+# Pre-commit hooks
+pre-commit==3.6.0
+
+# Database migrations
+alembic==1.13.1
+
+# Load testing
+locust==2.20.0
