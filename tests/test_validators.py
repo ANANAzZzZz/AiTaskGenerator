@@ -22,3 +22,21 @@ def test_validate_level_rejects_too_short_for_b2():
 
     assert validator.validate_level(exercise, CEFRLevel.B2) is False
 
+
+def test_validate_batch_quality_reports_low_score_for_invalid_batch():
+    validator = ExerciseValidator()
+    exercises = [{"question": "Hi?", "correct_answer": "A"}]  # invalid MC structure
+
+    report = validator.validate_batch_quality(
+        exercises=exercises,
+        exercise_type=ExerciseType.MULTIPLE_CHOICE,
+        target_level=CEFRLevel.B2,
+        expected_count=3,
+        min_score=0.7,
+    )
+
+    assert report["pass"] is False
+    assert report["score"] < 0.7
+    assert len(report["issues"]) > 0
+
+

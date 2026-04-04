@@ -1,5 +1,9 @@
 from typing import Dict, List
 from enum import Enum
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 class CEFRLevel(str, Enum):
@@ -208,6 +212,7 @@ Return ONLY a valid JSON object:
             grammar_topic: str = None,
             theme: str = "general",
             context: str = "everyday situations",
+            plan_hints: str = "",
             **kwargs
     ) -> List[Dict[str, str]]:
         """
@@ -222,6 +227,9 @@ Return ONLY a valid JSON object:
         if not template:
             raise ValueError(f"Unknown exercise type: {exercise_type}")
 
+        error_types = kwargs.pop("error_types", "verb tense, articles, prepositions")
+        language_functions = kwargs.pop("language_functions", "asking for information, making requests")
+
         # Заполняем параметры
         user_prompt = template.format(
             count=count,
@@ -229,7 +237,20 @@ Return ONLY a valid JSON object:
             grammar_topic=grammar_topic or "mixed grammar",
             theme=theme,
             context=context,
+            error_types=error_types,
+            language_functions=language_functions,
             **kwargs
+        )
+
+        if plan_hints:
+            user_prompt = f"{user_prompt}\n\nPlanner hints:\n- {plan_hints}"
+
+        logger.info(
+            "Prompt built: type=%s level=%s count=%s with_plan_hints=%s",
+            exercise_type.value,
+            level.value,
+            count,
+            bool(plan_hints),
         )
 
         # Формируем сообщения для API

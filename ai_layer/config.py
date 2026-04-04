@@ -19,6 +19,14 @@ class AIConfig(BaseSettings):
     DEFAULT_MAX_TOKENS: int = 2000
     DEFAULT_TOP_P: float = 0.9
 
+    # Полу-агент пайплайн
+    MIN_QUALITY_SCORE_FOR_ACCEPT: float = 0.6
+    ENABLE_OPTIONAL_REFINEMENT: bool = True
+
+    # Опциональный кэш/БД упражнений
+    ENABLE_EXERCISE_CACHE: bool = False
+    EXERCISE_DB_PATH: str = "exercises.db"
+
     # Лимиты и retry
     MAX_RETRIES: int = 3
     TIMEOUT: int = 30

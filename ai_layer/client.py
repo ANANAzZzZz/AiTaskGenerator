@@ -71,6 +71,7 @@ class OpenRouterClient:
         max_tokens = max_tokens or config.DEFAULT_MAX_TOKENS
 
         self.rate_limiter.wait_if_needed()
+        logger.info("LLM generate call: model=%s temperature=%s max_tokens=%s", model, temperature, max_tokens)
 
         try:
             request_payload: Dict[str, Any] = {
@@ -121,9 +122,12 @@ class OpenRouterClient:
         model_candidates = config.get_model_candidates(explicit_model)
         last_error: Optional[Exception] = None
 
+        logger.info("LLM generate_with_retry started: model_candidates=%s retries=%s", model_candidates, retries)
+
         for model in model_candidates:
             for attempt in range(retries):
                 try:
+                    logger.info("LLM attempt: model=%s attempt=%s/%s", model, attempt + 1, retries)
                     return self.generate(messages, model=model, **kwargs)
                 except openai.RateLimitError as e:
                     last_error = e

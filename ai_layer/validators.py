@@ -1,5 +1,9 @@
 from typing import Dict, Tuple, List
+import logging
 from .promts import ExerciseType, CEFRLevel
+
+
+logger = logging.getLogger(__name__)
 
 
 class ExerciseValidator:
@@ -75,7 +79,10 @@ class ExerciseValidator:
                 if field not in exercise:
                     errors.append(f"Missing required field: {field}")
 
-        return len(errors) == 0, errors
+        is_valid = len(errors) == 0
+        if not is_valid:
+            logger.debug("Structure validation failed: type=%s errors=%s", exercise_type.value, errors)
+        return is_valid, errors
 
     def validate_grammar(self, exercise: Dict) -> bool:
         """
@@ -141,3 +148,53 @@ class ExerciseValidator:
             return False
 
         return True
+
+    def validate_batch_quality(
+            self,
+            exercises: List[Dict],
+            exercise_type: ExerciseType,
+            target_level: CEFRLevel,
+            expected_count: int,
+            min_score: float
+    ) -> Dict:
+        """Оценивает качество пачки и возвращает отчет для decision о refinement."""
+        issues: List[str] = []
+
+        if expected_count > 0 and len(exercises) < expected_count:
+            issues.append(f"Expected {expected_count} exercises, got {len(exercises)}")
+
+        valid_structure = 0
+        valid_level = 0
+
+        for exercise in exercises:
+            is_valid, _ = self.validate_structure(exercise, exercise_type)
+            if is_valid:
+                valid_structure += 1
+
+            if self.validate_level(exercise, target_level):
+                valid_level += 1
+
+        total = max(1, len(exercises))
+        structure_ratio = valid_structure / total
+        level_ratio = valid_level / total
+        count_ratio = min(1.0, len(exercises) / max(1, expected_count))
+
+        score = round((0.5 * structure_ratio) + (0.3 * level_ratio) + (0.2 * count_ratio), 4)
+
+        if structure_ratio < 1.0:
+            issues.append("Some exercises do not match required structure")
+        if level_ratio < 0.8:
+            issues.append("Many exercises are not aligned with target CEFR level")
+
+        report = {
+            "score": score,
+            "pass": score >= min_score,
+            "issues": issues,
+            "stats": {
+                "structure_ratio": structure_ratio,
+                "level_ratio": level_ratio,
+                "count_ratio": count_ratio,
+            }
+        }
+        logger.info("Batch quality report: score=%s pass=%s issues=%s", report["score"], report["pass"], len(issues))
+        return report
