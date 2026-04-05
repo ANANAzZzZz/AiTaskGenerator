@@ -147,6 +147,28 @@ curl -X POST "http://127.0.0.1:8000/api/v1/generate" `
 pytest -q
 ```
 
+## Бенчмарки генерации и полу-агента
+
+В проект добавлен benchmark harness: `benchmarks/run_benchmarks.py`.
+
+Быстрый офлайн smoke (без OpenRouter, детерминированно):
+
+```powershell
+python -m benchmarks.run_benchmarks --mode direct --iterations 5 --use-fake-client
+```
+
+Реальные замеры через API endpoint-ы:
+
+```powershell
+python main.py
+python -m benchmarks.run_benchmarks --mode api --iterations 3 --base-url http://127.0.0.1:8000
+```
+
+Сценарии лежат в `benchmarks/scenarios.json`, результаты сохраняются в `benchmarks/results/` в форматах JSON/CSV/MD.
+Метрики включают latency, success rate, cache/refinement rate, quality score и stage timings пайплайна (planner, generation, validation, refinement).
+
+Подробности: `docs/benchmarking.md`.
+
 ## Подробная документация
 
 Подробное техническое описание доступно в `docs/PROJECT_DETAILED_RU.md`.

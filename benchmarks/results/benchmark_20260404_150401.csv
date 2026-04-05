@@ -1,0 +1,6 @@
+scenario,operation,latency_ms,success,error
+generate_fill_blanks_cold,generate,6.33,True,
+generate_fill_blanks_warm,generate,0.79,True,
+generate_multiple_choice,generate,5.86,True,
+batch_mixed,batch,11.82,True,
+improve_single_exercise,improve,0.08,True,

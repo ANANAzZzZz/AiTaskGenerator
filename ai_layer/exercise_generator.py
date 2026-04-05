@@ -52,6 +52,10 @@ class ExerciseGenerator:
             Dict с упражнениями и метаданными
         """
 
+        benchmark_trace_enabled = bool(kwargs.pop("benchmark_trace", False))
+        trace: Dict[str, Any] = {"timings_ms": {}, "events": {"llm_calls": 0, "refinement_called": False}}
+        started_total = time.perf_counter()
+
         logger.info(
             "Generation started: type=%s level=%s count=%s theme=%s force_refresh=%s",
             exercise_type.value,
@@ -61,13 +65,19 @@ class ExerciseGenerator:
             force_refresh,
         )
 
+        started_cache = time.perf_counter()
         cached = self._try_get_cached(exercise_type, level, count, grammar_topic, theme, force_refresh)
+        trace["timings_ms"]["cache_lookup"] = round((time.perf_counter() - started_cache) * 1000, 2)
         if cached is not None:
             cached.setdefault("metadata", {})
             cached["metadata"]["source"] = "cache"
+            trace["timings_ms"]["total"] = round((time.perf_counter() - started_total) * 1000, 2)
+            if benchmark_trace_enabled:
+                cached["metadata"]["benchmark_trace"] = trace
             logger.info("Generation finished from cache")
             return cached
 
+        started_planner = time.perf_counter()
         plan = self.planner.build_plan(
             exercise_type=exercise_type,
             level=level,
@@ -75,6 +85,7 @@ class ExerciseGenerator:
             grammar_topic=grammar_topic,
             theme=theme,
         )
+        trace["timings_ms"]["planner"] = round((time.perf_counter() - started_planner) * 1000, 2)
 
         # Строим промпт
         messages = PromptBuilder.build_prompt(
@@ -90,20 +101,26 @@ class ExerciseGenerator:
         # Генерируем с retry логикой
         response = None
         try:
+            started_llm = time.perf_counter()
+            trace["events"]["llm_calls"] += 1
             response = self._get_client().generate_with_retry(
                 messages=messages,
                 response_format={"type": "json_object"},  # Важно для JSON
                 temperature=0.7,  # Баланс между креативностью и последовательностью
                 max_tokens=2000
             )
+            trace["timings_ms"]["llm_generation"] = round((time.perf_counter() - started_llm) * 1000, 2)
 
             # Парсим JSON
             result = json.loads(response)
 
             # Валидация если нужна
             if validate:
+                started_validation = time.perf_counter()
                 result = self._validate_and_fix(result, exercise_type, level)
+                trace["timings_ms"]["validation"] = round((time.perf_counter() - started_validation) * 1000, 2)
 
+            started_quality = time.perf_counter()
             quality_report = self.validator.validate_batch_quality(
                 exercises=result.get("exercises", []),
                 exercise_type=exercise_type,
@@ -111,6 +128,7 @@ class ExerciseGenerator:
                 expected_count=plan["target_count"],
                 min_score=config.MIN_QUALITY_SCORE_FOR_ACCEPT,
             )
+            trace["timings_ms"]["quality_check"] = round((time.perf_counter() - started_quality) * 1000, 2)
             logger.info("Self-validation score=%s pass=%s", quality_report["score"], quality_report["pass"])
 
             refined = False
@@ -121,6 +139,9 @@ class ExerciseGenerator:
                 and result.get("exercises")
             ):
                 logger.info("Refinement triggered due to low quality score")
+                trace["events"]["refinement_called"] = True
+                started_refinement = time.perf_counter()
+                trace["events"]["llm_calls"] += 1
                 refined_result = self._refine_result_once(
                     bad_result=result,
                     quality_report=quality_report,
@@ -144,6 +165,7 @@ class ExerciseGenerator:
                     logger.info("Refinement accepted: improved score to %s", refined_quality_report["score"])
                 else:
                     logger.info("Refinement discarded: score did not improve")
+                trace["timings_ms"]["refinement"] = round((time.perf_counter() - started_refinement) * 1000, 2)
 
             # Добавляем метаданные
             result['metadata'] = {
@@ -158,6 +180,10 @@ class ExerciseGenerator:
                 'refined': refined,
                 'source': 'llm'
             }
+
+            trace["timings_ms"]["total"] = round((time.perf_counter() - started_total) * 1000, 2)
+            if benchmark_trace_enabled:
+                result['metadata']['benchmark_trace'] = trace
 
             self._save_to_cache(result, exercise_type, level, count, grammar_topic, theme)
 

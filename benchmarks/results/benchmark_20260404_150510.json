@@ -1,0 +1,903 @@
+{
+  "created_at": "2026-04-04T15:05:10.390434",
+  "samples": [
+    {
+      "scenario": "generate_fill_blanks_cold",
+      "operation": "generate",
+      "latency_ms": 6.81799999983923,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 0,
+        "generated_at": 1775304310.3514006,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.0,
+          "pass": false,
+          "issues": [
+            "Expected 5 exercises, got 0",
+            "Some exercises do not match required structure",
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 0.0,
+            "level_ratio": 0.0,
+            "count_ratio": 0.0
+          }
+        },
+        "refined": false,
+        "source": "llm",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.0,
+            "planner": 0.01,
+            "llm_generation": 0.14,
+            "validation": 1.22,
+            "quality_check": 0.02,
+            "total": 1.45
+          },
+          "events": {
+            "llm_calls": 1,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_cold",
+      "operation": "generate",
+      "latency_ms": 5.748900000071444,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 5,
+        "generated_at": 1775304310.3575697,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.7,
+          "pass": true,
+          "issues": [
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 1.0,
+            "level_ratio": 0.0,
+            "count_ratio": 1.0
+          }
+        },
+        "refined": false,
+        "source": "llm",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.0,
+            "planner": 0.01,
+            "llm_generation": 0.08,
+            "validation": 0.47,
+            "quality_check": 0.02,
+            "total": 0.65
+          },
+          "events": {
+            "llm_calls": 1,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_cold",
+      "operation": "generate",
+      "latency_ms": 5.302000000483531,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 0,
+        "generated_at": 1775304310.3632543,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.0,
+          "pass": false,
+          "issues": [
+            "Expected 5 exercises, got 0",
+            "Some exercises do not match required structure",
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 0.0,
+            "level_ratio": 0.0,
+            "count_ratio": 0.0
+          }
+        },
+        "refined": false,
+        "source": "llm",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.0,
+            "planner": 0.01,
+            "llm_generation": 0.04,
+            "validation": 0.37,
+            "quality_check": 0.01,
+            "total": 0.48
+          },
+          "events": {
+            "llm_calls": 1,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_cold",
+      "operation": "generate",
+      "latency_ms": 5.386199999520613,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 5,
+        "generated_at": 1775304310.368876,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.7,
+          "pass": true,
+          "issues": [
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 1.0,
+            "level_ratio": 0.0,
+            "count_ratio": 1.0
+          }
+        },
+        "refined": false,
+        "source": "llm",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.0,
+            "planner": 0.01,
+            "llm_generation": 0.04,
+            "validation": 0.6,
+            "quality_check": 0.02,
+            "total": 0.71
+          },
+          "events": {
+            "llm_calls": 1,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_cold",
+      "operation": "generate",
+      "latency_ms": 5.419099999926402,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 0,
+        "generated_at": 1775304310.3741336,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.0,
+          "pass": false,
+          "issues": [
+            "Expected 5 exercises, got 0",
+            "Some exercises do not match required structure",
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 0.0,
+            "level_ratio": 0.0,
+            "count_ratio": 0.0
+          }
+        },
+        "refined": false,
+        "source": "llm",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.0,
+            "planner": 0.0,
+            "llm_generation": 0.04,
+            "validation": 0.42,
+            "quality_check": 0.01,
+            "total": 0.51
+          },
+          "events": {
+            "llm_calls": 1,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_warm",
+      "operation": "generate",
+      "latency_ms": 0.9164999992208323,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 0,
+        "generated_at": 1775304310.3741336,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.0,
+          "pass": false,
+          "issues": [
+            "Expected 5 exercises, got 0",
+            "Some exercises do not match required structure",
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 0.0,
+            "level_ratio": 0.0,
+            "count_ratio": 0.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.88,
+            "total": 0.89
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_warm",
+      "operation": "generate",
+      "latency_ms": 0.39000000015221303,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 0,
+        "generated_at": 1775304310.3741336,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.0,
+          "pass": false,
+          "issues": [
+            "Expected 5 exercises, got 0",
+            "Some exercises do not match required structure",
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 0.0,
+            "level_ratio": 0.0,
+            "count_ratio": 0.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.37,
+            "total": 0.38
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_warm",
+      "operation": "generate",
+      "latency_ms": 0.4445999993549776,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 0,
+        "generated_at": 1775304310.3741336,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.0,
+          "pass": false,
+          "issues": [
+            "Expected 5 exercises, got 0",
+            "Some exercises do not match required structure",
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 0.0,
+            "level_ratio": 0.0,
+            "count_ratio": 0.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.43,
+            "total": 0.43
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_warm",
+      "operation": "generate",
+      "latency_ms": 0.5257000002529821,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 0,
+        "generated_at": 1775304310.3741336,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.0,
+          "pass": false,
+          "issues": [
+            "Expected 5 exercises, got 0",
+            "Some exercises do not match required structure",
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 0.0,
+            "level_ratio": 0.0,
+            "count_ratio": 0.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.5,
+            "total": 0.51
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_fill_blanks_warm",
+      "operation": "generate",
+      "latency_ms": 0.36560000080498867,
+      "success": true,
+      "metadata": {
+        "type": "fill_blanks",
+        "level": "B1",
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "count": 0,
+        "generated_at": 1775304310.3741336,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Present Perfect",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=fill_blanks; level=B1; grammar_focus=Present Perfect; theme=travel; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.0,
+          "pass": false,
+          "issues": [
+            "Expected 5 exercises, got 0",
+            "Some exercises do not match required structure",
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 0.0,
+            "level_ratio": 0.0,
+            "count_ratio": 0.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.35,
+            "total": 0.36
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_multiple_choice",
+      "operation": "generate",
+      "latency_ms": 0.40209999951912323,
+      "success": true,
+      "metadata": {
+        "type": "multiple_choice",
+        "level": "B2",
+        "grammar_topic": "Conditionals",
+        "theme": "work",
+        "count": 5,
+        "generated_at": 1775304241.7993238,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Conditionals",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=multiple_choice; level=B2; grammar_focus=Conditionals; theme=work; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.7,
+          "pass": true,
+          "issues": [
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 1.0,
+            "level_ratio": 0.0,
+            "count_ratio": 1.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.39,
+            "total": 0.39
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_multiple_choice",
+      "operation": "generate",
+      "latency_ms": 0.5399000001489185,
+      "success": true,
+      "metadata": {
+        "type": "multiple_choice",
+        "level": "B2",
+        "grammar_topic": "Conditionals",
+        "theme": "work",
+        "count": 5,
+        "generated_at": 1775304241.7993238,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Conditionals",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=multiple_choice; level=B2; grammar_focus=Conditionals; theme=work; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.7,
+          "pass": true,
+          "issues": [
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 1.0,
+            "level_ratio": 0.0,
+            "count_ratio": 1.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.52,
+            "total": 0.53
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_multiple_choice",
+      "operation": "generate",
+      "latency_ms": 0.41959999998653075,
+      "success": true,
+      "metadata": {
+        "type": "multiple_choice",
+        "level": "B2",
+        "grammar_topic": "Conditionals",
+        "theme": "work",
+        "count": 5,
+        "generated_at": 1775304241.7993238,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Conditionals",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=multiple_choice; level=B2; grammar_focus=Conditionals; theme=work; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.7,
+          "pass": true,
+          "issues": [
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 1.0,
+            "level_ratio": 0.0,
+            "count_ratio": 1.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.4,
+            "total": 0.41
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_multiple_choice",
+      "operation": "generate",
+      "latency_ms": 0.36840000029769726,
+      "success": true,
+      "metadata": {
+        "type": "multiple_choice",
+        "level": "B2",
+        "grammar_topic": "Conditionals",
+        "theme": "work",
+        "count": 5,
+        "generated_at": 1775304241.7993238,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Conditionals",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=multiple_choice; level=B2; grammar_focus=Conditionals; theme=work; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.7,
+          "pass": true,
+          "issues": [
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 1.0,
+            "level_ratio": 0.0,
+            "count_ratio": 1.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.35,
+            "total": 0.36
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "generate_multiple_choice",
+      "operation": "generate",
+      "latency_ms": 0.3935000004275935,
+      "success": true,
+      "metadata": {
+        "type": "multiple_choice",
+        "level": "B2",
+        "grammar_topic": "Conditionals",
+        "theme": "work",
+        "count": 5,
+        "generated_at": 1775304241.7993238,
+        "plan": {
+          "target_count": 5,
+          "grammar_focus": "Conditionals",
+          "plan_hints": "Plan: create exactly 5 items; exercise_type=multiple_choice; level=B2; grammar_focus=Conditionals; theme=work; keep JSON valid and consistent with template fields."
+        },
+        "quality": {
+          "score": 0.7,
+          "pass": true,
+          "issues": [
+            "Many exercises are not aligned with target CEFR level"
+          ],
+          "stats": {
+            "structure_ratio": 1.0,
+            "level_ratio": 0.0,
+            "count_ratio": 1.0
+          }
+        },
+        "refined": false,
+        "source": "cache",
+        "benchmark_trace": {
+          "timings_ms": {
+            "cache_lookup": 0.38,
+            "total": 0.38
+          },
+          "events": {
+            "llm_calls": 0,
+            "refinement_called": false
+          }
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "batch_mixed",
+      "operation": "batch",
+      "latency_ms": 0.7183999996414059,
+      "success": true,
+      "metadata": {
+        "batch_success": 1.0,
+        "source": "cache",
+        "quality": {
+          "score": 0.35
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "batch_mixed",
+      "operation": "batch",
+      "latency_ms": 0.8569000001443783,
+      "success": true,
+      "metadata": {
+        "batch_success": 1.0,
+        "source": "cache",
+        "quality": {
+          "score": 0.35
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "batch_mixed",
+      "operation": "batch",
+      "latency_ms": 0.8452000001852866,
+      "success": true,
+      "metadata": {
+        "batch_success": 1.0,
+        "source": "cache",
+        "quality": {
+          "score": 0.35
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "batch_mixed",
+      "operation": "batch",
+      "latency_ms": 0.7316999999602558,
+      "success": true,
+      "metadata": {
+        "batch_success": 1.0,
+        "source": "cache",
+        "quality": {
+          "score": 0.35
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "batch_mixed",
+      "operation": "batch",
+      "latency_ms": 0.8508000000801985,
+      "success": true,
+      "metadata": {
+        "batch_success": 1.0,
+        "source": "cache",
+        "quality": {
+          "score": 0.35
+        }
+      },
+      "error": null
+    },
+    {
+      "scenario": "improve_single_exercise",
+      "operation": "improve",
+      "latency_ms": 0.05089999922347488,
+      "success": true,
+      "metadata": {},
+      "error": null
+    },
+    {
+      "scenario": "improve_single_exercise",
+      "operation": "improve",
+      "latency_ms": 0.034300000152143184,
+      "success": true,
+      "metadata": {},
+      "error": null
+    },
+    {
+      "scenario": "improve_single_exercise",
+      "operation": "improve",
+      "latency_ms": 0.031100000342121348,
+      "success": true,
+      "metadata": {},
+      "error": null
+    },
+    {
+      "scenario": "improve_single_exercise",
+      "operation": "improve",
+      "latency_ms": 0.023999999939405825,
+      "success": true,
+      "metadata": {},
+      "error": null
+    },
+    {
+      "scenario": "improve_single_exercise",
+      "operation": "improve",
+      "latency_ms": 0.032100000680657104,
+      "success": true,
+      "metadata": {},
+      "error": null
+    }
+  ],
+  "report": {
+    "overall": {
+      "runs": 25,
+      "success_rate": 1.0,
+      "latency_avg_ms": 1.5,
+      "latency_p50_ms": 0.53,
+      "latency_p95_ms": 5.68,
+      "cache_hit_rate": 0.6,
+      "refinement_rate": 0.0,
+      "plan_coverage_rate": 0.6,
+      "quality_avg_score": 0.3325,
+      "quality_pass_rate": 0.4667,
+      "cache_lookup_avg_ms": 0.3,
+      "planner_avg_ms": 0.01,
+      "llm_generation_avg_ms": 0.07,
+      "validation_avg_ms": 0.62,
+      "quality_check_avg_ms": 0.02,
+      "total_avg_ms": 0.56
+    },
+    "scenarios": {
+      "generate_fill_blanks_cold": {
+        "runs": 5,
+        "success_rate": 1.0,
+        "latency_avg_ms": 5.73,
+        "latency_p50_ms": 5.42,
+        "latency_p95_ms": 6.6,
+        "cache_hit_rate": 0.0,
+        "refinement_rate": 0.0,
+        "plan_coverage_rate": 1.0,
+        "quality_avg_score": 0.28,
+        "quality_pass_rate": 0.4,
+        "cache_lookup_avg_ms": 0.0,
+        "planner_avg_ms": 0.01,
+        "llm_generation_avg_ms": 0.07,
+        "validation_avg_ms": 0.62,
+        "quality_check_avg_ms": 0.02,
+        "total_avg_ms": 0.76
+      },
+      "generate_fill_blanks_warm": {
+        "runs": 5,
+        "success_rate": 1.0,
+        "latency_avg_ms": 0.53,
+        "latency_p50_ms": 0.44,
+        "latency_p95_ms": 0.84,
+        "cache_hit_rate": 1.0,
+        "refinement_rate": 0.0,
+        "plan_coverage_rate": 1.0,
+        "quality_avg_score": 0.0,
+        "quality_pass_rate": 0.0,
+        "cache_lookup_avg_ms": 0.51,
+        "total_avg_ms": 0.51
+      },
+      "generate_multiple_choice": {
+        "runs": 5,
+        "success_rate": 1.0,
+        "latency_avg_ms": 0.42,
+        "latency_p50_ms": 0.4,
+        "latency_p95_ms": 0.52,
+        "cache_hit_rate": 1.0,
+        "refinement_rate": 0.0,
+        "plan_coverage_rate": 1.0,
+        "quality_avg_score": 0.7,
+        "quality_pass_rate": 1.0,
+        "cache_lookup_avg_ms": 0.41,
+        "total_avg_ms": 0.41
+      },
+      "batch_mixed": {
+        "runs": 5,
+        "success_rate": 1.0,
+        "latency_avg_ms": 0.8,
+        "latency_p50_ms": 0.85,
+        "latency_p95_ms": 0.86,
+        "cache_hit_rate": 1.0,
+        "refinement_rate": 0.0,
+        "plan_coverage_rate": 0.0,
+        "quality_avg_score": 0.35,
+        "quality_pass_rate": null
+      },
+      "improve_single_exercise": {
+        "runs": 5,
+        "success_rate": 1.0,
+        "latency_avg_ms": 0.03,
+        "latency_p50_ms": 0.03,
+        "latency_p95_ms": 0.05,
+        "cache_hit_rate": 0.0,
+        "refinement_rate": 0.0,
+        "plan_coverage_rate": 0.0,
+        "quality_avg_score": null,
+        "quality_pass_rate": null
+      }
+    }
+  }
+}

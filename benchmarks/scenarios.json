@@ -1,0 +1,78 @@
+{
+  "scenarios": [
+    {
+      "name": "generate_fill_blanks_cold",
+      "operation": "generate",
+      "payload": {
+        "exercise_type": "fill_blanks",
+        "level": "B1",
+        "count": 5,
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "context": "airport",
+        "force_refresh": true
+      }
+    },
+    {
+      "name": "generate_fill_blanks_warm",
+      "operation": "generate",
+      "payload": {
+        "exercise_type": "fill_blanks",
+        "level": "B1",
+        "count": 5,
+        "grammar_topic": "Present Perfect",
+        "theme": "travel",
+        "context": "airport",
+        "force_refresh": false
+      }
+    },
+    {
+      "name": "generate_multiple_choice",
+      "operation": "generate",
+      "payload": {
+        "exercise_type": "multiple_choice",
+        "level": "B2",
+        "count": 5,
+        "grammar_topic": "Conditionals",
+        "theme": "work",
+        "context": "office"
+      }
+    },
+    {
+      "name": "batch_mixed",
+      "operation": "batch",
+      "payload": [
+        {
+          "exercise_type": "fill_blanks",
+          "level": "A2",
+          "count": 3,
+          "grammar_topic": "Present Simple",
+          "theme": "daily routines",
+          "context": "home"
+        },
+        {
+          "exercise_type": "multiple_choice",
+          "level": "B1",
+          "count": 3,
+          "grammar_topic": "Past Simple",
+          "theme": "travel",
+          "context": "hotel"
+        }
+      ]
+    },
+    {
+      "name": "improve_single_exercise",
+      "operation": "improve",
+      "payload": {
+        "exercise": {
+          "sentence": "I ___ to school yesterday.",
+          "correct_answer": "goed"
+        },
+        "feedback": "Исправь неправильную форму глагола и сделай пример более естественным.",
+        "exercise_type": "fill_blanks",
+        "level": "A2"
+      }
+    }
+  ]
+}
+
